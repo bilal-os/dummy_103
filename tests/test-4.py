@@ -5,29 +5,23 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-# Get executor URL from command line
 executor_url = sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8888/"
-
 chrome_options = Options()
-chrome_options.add_argument("--start-maximized")
+chrome_options.add_argument("--headless")
 
-driver = webdriver.Remote(
-    command_executor=executor_url,
-    options=chrome_options
-)
+driver = webdriver.Remote(command_executor=executor_url, options=chrome_options)
 
 try:
-    driver.get("https://www.example.com")
-    WebDriverWait(driver, 10).until(
-        EC.visibility_of(driver.find_element(By.CSS_SELECTOR, "h1"))
-    )
-    assert "Example Domain" in driver.title, "Title does not match expected value."
-    more_info = driver.find_element(By.CSS_SELECTOR, "a")
-    print("Found link with text:", more_info.text)
-    print("Test passed: Example.com loaded successfully and title is as expected.")
+    driver.get("https://github.com/login")
+    WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.ID, "login_field")))
 
-except AssertionError as e:
+    username_field = driver.find_element(By.ID, "login_field")
+    password_field = driver.find_element(By.ID, "password")
+
+    assert username_field.is_displayed() and password_field.is_displayed(), "Login form elements not visible."
+
+    print("Test passed: GitHub login form loaded successfully.")
+except Exception as e:
     print("Test failed:", e)
-
 finally:
     driver.quit()
