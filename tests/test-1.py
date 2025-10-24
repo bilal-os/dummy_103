@@ -12,7 +12,7 @@ chrome_options.add_argument("--headless")
 driver = webdriver.Remote(command_executor=executor_url, options=chrome_options)
 
 try:
-    driver.get("https://www.google.com")
+    driver.get("https://www.goog123dasdle.com")
     WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.NAME, "q")))
 
     search_box = driver.find_element(By.NAME, "q")
