@@ -21,7 +21,7 @@ try:
     WebDriverWait(driver, 10).until(
         EC.visibility_of(driver.find_element(By.CSS_SELECTOR, "h1"))
     )
-    assert "Example Domain" in driver.title, "Title does not match expected value."
+    assert "Example Domain_122" in driver.title, "Title does not match expected value."
     more_info = driver.find_element(By.CSS_SELECTOR, "a")
     print("Found link with text:", more_info.text)
     print("Test passed: Example.com loaded successfully and title is as expected.")
